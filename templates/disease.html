@@ -1,54 +1,141 @@
-{% extends 'layout.html' %} {% block body %}
-
+{% extends 'layout.html' %}
+{% block body %}
 
 <style>
-  html body {
-    background-color: rgb(206, 206, 228);
+  * {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: url('https://c4.wallpaperflare.com/wallpaper/311/699/596/fruit-allsorts-pineapple-melon-wallpaper-preview.jpg') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1;
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  h2 {
+    text-align: center;
+    color: #ffffff;
+    font-size: 26px;
+    margin-top: 2rem;
+    text-shadow: 2px 2px 8px #000;
+  }
+
+  .form-container {
+    width: 400px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 25px;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 30px 25px;
+    margin: 2rem auto;
+    text-align: center;
+  }
+
+  .form-container h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #2d3436;
+  }
+
+  input[type="file"] {
+    padding: 12px;
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    border: none;
+    background: #f1f2f6;
+    box-shadow: inset 3px 3px 6px #d1d9e6, inset -3px -3px 6px #ffffff;
+    font-weight: bold;
+    color: #2d3436;
+    cursor: pointer;
+  }
+
+  #output-image {
+    width: 100%;
+    max-height: 300px;
+    margin-top: 15px;
+    object-fit: contain;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .morph-button {
+    margin-top: 30px;
+    background: #2ecc71;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .morph-button:hover {
+    background: #27ae60;
+    transform: scale(1.05);
+  }
+
+  footer {
+    background: rgba(0, 0, 0, 0.6);
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+    color: #dfe6e9;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  @media (max-width: 500px) {
+    .form-container {
+      width: 90%;
+      padding: 20px;
+    }
+
+    h2 {
+      font-size: 20px;
+    }
   }
 </style>
-<br /><br />
-  <h2 style="text-align: center; margin: 0px; color: black">
-    <b>Find out which disease has been caught by your plant</b>
-  </h2>
-  <br />
-  <br>
 
-<div style="
-    width: 350px;
-    height: 50rem;
-    margin: 0px auto;
-    color: black;
-    border-radius: 25px;
-    padding: 10px 10px;
-    font-weight: bold;
-  ">
+<main>
+  <h2><b>Find out which disease has affected your plant</b></h2>
 
-  
+  <div class="form-container">
+    <form method="POST" enctype="multipart/form-data">
+      <h3><b>Please Upload The Image</b></h3>
 
+      <input type="file" name="file" id="inputfile" onchange="preview_image(event)" required />
+      <img id="output-image" alt="Preview will appear here..." />
+      <button type="submit" class="morph-button">Predict</button>
+    </form>
+  </div>
+</main>
 
-  <form class="form-signin" method=post enctype=multipart/form-data>
+<footer>
+  &copy; 2025 Cultivora. All rights reserved. | Empowering Farmers with AI
+</footer>
 
-    <h2 class="h4 mb-3 font-weight-normal"><b>Please Upload The Image</b></h2>
-    <input type="file" name="file" class="form-control-file" id="inputfile" onchange="preview_image(event)" style="font-weight: bold;">
-    <br>
-    <br>
-    <img id="output-image" class="rounded mx-auto d-block" />
-    <button class="btn btn-lg btn-primary btn-block" type="submit" style="font-weight: bold;">Predict</button>
-
-
-  </form>
-</div>
-
-<script type="text/javascript">
+<script>
   function preview_image(event) {
-    var reader = new FileReader();
+    const reader = new FileReader();
     reader.onload = function () {
-      var output = document.getElementById('output-image')
+      const output = document.getElementById('output-image');
       output.src = reader.result;
-    }
+    };
     reader.readAsDataURL(event.target.files[0]);
   }
 </script>
 
-</div>
 {% endblock %}

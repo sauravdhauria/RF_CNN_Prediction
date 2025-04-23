@@ -1,121 +1,156 @@
-{% extends 'layout.html' %} {% block body %}
-
+{% extends 'layout.html' %}
+{% block body %}
 <style>
-  html body {
-    background-color: rgb(206, 206, 228);
+  * {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #d4fc79, #96e6a1); /* Light green gradient */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  header, footer {
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    padding: 0.2rem 0;
+    font-size: 14px;
+    font-weight: normal;
+  }
+
+  header a, footer a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+  }
+
+  header a:hover, footer a:hover {
+    text-decoration: underline;
+  }
+
+  h2 {
+    text-align: center;
+    margin-top: 3rem;
+    color: #fff;
+    font-size: 24px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 1rem;
+    border-radius: 12px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .form-box {
+    width: 400px;
+    padding: 30px;
+    margin: 2rem auto;
+    border-radius: 25px;
+    background: rgba(236, 240, 243, 0.95);
+    box-shadow: 10px 10px 30px #d1d9e6, -10px -10px 30px #ffffff;
+  }
+
+  label {
+    display: block;
+    font-size: 17px;
+    margin: 10px 0 6px;
+    color: #2d3436;
+    font-weight: bold;
+  }
+
+  input[type="number"],
+  select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 12px;
+    border: none;
+    background: #f1f2f6;
+    box-shadow: inset 3px 3px 6px #d1d9e6, inset -3px -3px 6px #ffffff;
+    font-weight: bold;
+    color: #2d3436;
+    margin-bottom: 15px;
+  }
+
+  input:focus,
+  select:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #74b9ff;
+  }
+
+  .morph-button {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    background: #ecf0f3;
+    color: #2d3436;
+    cursor: pointer;
+    margin-top: 20px;
+    box-shadow: 6px 6px 12px #b8b9be, -6px -6px 12px #ffffff;
+    transition: all 0.3s ease;
+  }
+
+  .morph-button:hover {
+    background: #dff9fb;
+    box-shadow: inset 5px 5px 15px #b8b9be, inset -5px -5px 15px #ffffff;
+    transform: scale(1.03);
+  }
+
+  footer {
+    margin-top: auto;
   }
 </style>
-<!--Form Section-->
-<br /><br />
-<h2 style="text-align: center; margin: 0px; color: black">
-  <b>Get informed advice on fertilizer based on soil</b>
-</h2>
-<br />
 
-<div
-  style="
-    width: 350px;
-    height: 40rem;
-    margin: 0px auto;
-    color: black;
-    border-radius: 25px;
-    padding: 10px 10px;
-  "
->
+<h2><b>Get informed advice on fertilizer based on soil</b></h2>
+
+<div class="form-box">
   <form method="POST" action="{{ url_for('fert_recommend') }}">
-    <div class="form-group">
-      <label for="Nitrogen" style="font-size: 17px"><b>Nitrogen</b></label>
-      <input
-        type="number"
-        class="form-control"
-        id="Nitrogen"
-        name="nitrogen"
-        placeholder="Enter the value (example:50)"
-        style="font-weight: bold"
-        required
-      />
-    </div>
-    <div class="form-group">
-      <label for="Phosphorous" style="font-size: 17px"
-        ><b>Phosphorous</b></label
-      >
-      <input
-        type="number"
-        class="form-control"
-        id="Phosphorous"
-        name="phosphorous"
-        placeholder="Enter the value (example:50)"
-        style="font-weight: bold"
-        required
-      />
-    </div>
+    <label for="Nitrogen">Nitrogen</label>
+    <input type="number" id="Nitrogen" name="nitrogen" placeholder="Enter the value (example:50)" required />
 
-    <div class="form-group">
-      <label for="Pottasium" style="font-size: 17px"><b>Pottasium</b></label>
-      <input
-        type="number"
-        class="form-control"
-        id="Pottasium"
-        name="pottasium"
-        placeholder="Enter the value (example:50)"
-        style="font-weight: bold"
-        required
-      />
-    </div>
-    <div class="form-group">
-      <label for="crop" style="font-size: 17px"
-        ><b>Crop you want to grow</b></label
-      >
-      <select
-        name="cropname"
-        class="form-control"
-        id="crop"
-        placeholder="Select a crop"
-        style="font-weight: bold"
-        required
-      >
-        <option selected>Select crop</option>
-        <option>rice</option>
-        <option>maize</option>
-        <option>chickpea</option>
-        <option>kidneybeans</option>
-        <option>pigeonpeas</option>
-        <option>mothbeans</option>
-        <option>mungbean</option>
-        <option>blackgram</option>
-        <option>lentil</option>
-        <option>pomegranate</option>
-        <option>banana</option>
-        <option>mango</option>
-        <option>grapes</option>
-        <option>watermelon</option>
-        <option>muskmelon</option>
-        <option>apple</option>
-        <option>orange</option>
-        <option>papaya</option>
-        <option>coconut</option>
-        <option>cotton</option>
-        <option>jute</option>
-        <option>coffee</option>
-      </select>
-    </div>
+    <label for="Phosphorous">Phosphorous</label>
+    <input type="number" id="Phosphorous" name="phosphorous" placeholder="Enter the value (example:50)" required />
 
-    <div class="d-flex justify-content-center">
-      <button
-        type="submit"
-        class="btn btn-info"
-        style="
-          color: black;
-          font-weight: bold;
-          width: 130px;
-          height: 50px;
-          border-radius: 12px;
-          font-size: 21px;
-        "
-      >
-        Predict
-      </button>
-    </div>
+    <label for="Pottasium">Pottasium</label>
+    <input type="number" id="Pottasium" name="pottasium" placeholder="Enter the value (example:50)" required />
+
+    <label for="crop">Crop you want to grow</label>
+    <select name="cropname" id="crop" required>
+      <option disabled selected>Select crop</option>
+      <option>rice</option>
+      <option>maize</option>
+      <option>chickpea</option>
+      <option>kidneybeans</option>
+      <option>pigeonpeas</option>
+      <option>mothbeans</option>
+      <option>mungbean</option>
+      <option>blackgram</option>
+      <option>lentil</option>
+      <option>pomegranate</option>
+      <option>banana</option>
+      <option>mango</option>
+      <option>grapes</option>
+      <option>watermelon</option>
+      <option>muskmelon</option>
+      <option>apple</option>
+      <option>orange</option>
+      <option>papaya</option>
+      <option>coconut</option>
+      <option>cotton</option>
+      <option>jute</option>
+      <option>coffee</option>
+    </select>
+
+    <button type="submit" class="morph-button">Predict</button>
   </form>
 </div>
 {% endblock %}
